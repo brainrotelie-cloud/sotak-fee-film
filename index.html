@@ -1,0 +1,483 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صوتك في فيلم | خدمات الدبلجة والتعليق الصوتي</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cinemaRed: '#E50914',
+                        cinemaDarkRed: '#B20710',
+                        cinemaGold: '#FFD700',
+                        cinemaDark: '#0b0b10',
+                        cinemaCard: '#151520',
+                        orangeOrange: '#FF6600',
+                        whatsappGreen: '#25D366'
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0b10;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(21, 21, 32, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(30, 30, 45, 0.6) 0%, rgba(15, 15, 22, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 9, 20, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(229, 9, 20, 0.7);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px -10px rgba(229, 9, 20, 0.3);
+        }
+
+        .glow-red {
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
+        }
+
+        .glow-orange {
+            box-shadow: 0 0 25px rgba(255, 102, 0, 0.4);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 12px rgba(229, 9, 20, 0.6);
+        }
+
+        .text-glow-gold {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+        }
+
+        .gradient-border::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 1.1rem;
+            background: linear-gradient(45deg, #E50914, #FF6600, #FFD700, #25D366);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: animatedGradient 6s ease infinite;
+        }
+
+        @keyframes animatedGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: #1f1f2e;
+            height: 8px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #E50914;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.8);
+            transition: transform 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #FFD700;
+        }
+
+        @keyframes pulse-slow {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.85;
+                transform: scale(1.02);
+            }
+        }
+
+        .pulse-discount {
+            animation: pulse-slow 2.5s infinite;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-cinemaRed selection:text-white">
+
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                    class="w-12 h-12 bg-cinemaRed rounded-full flex items-center justify-center glow-red text-xl text-white font-black">
+                    <i class="fa-solid fa-film"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold text-white tracking-wide">صوتك في <span class="text-cinemaRed text-glow">فيلم</span></span>
+                    <span class="block text-xs text-gray-400 font-semibold">استوديو الدبلجة والتعليق الصوتي</span>
+                </div>
+            </div>
+
+            <!-- Header Call & WhatsApp Buttons -->
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <a href="tel:01228838106"
+                    class="bg-orangeOrange hover:bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg transition-all transform hover:scale-105 border border-orange-400/30">
+                    <i class="fa-solid fa-phone text-sm ml-2"></i>
+                    <span class="hidden sm:inline">اتصل أورانج: </span>
+                    <span class="font-mono tracking-wider">01228838106</span>
+                </a>
+                <a href="https://wa.me/201228838106?text=%D9%87%D9%84%D8%A7%20%D8%A3%D8%B3%D8%B7%D9%89%D8%8C%20%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D8%AF%D8%A8%D9%84%D8%AC%D8%A9"
+                    target="_blank"
+                    class="bg-whatsappGreen hover:bg-emerald-600 text-white px-4 py-2 rounded-full font-bold text-xs sm:text-sm flex items-center shadow-lg transition-all transform hover:scale-105">
+                    <i class="fa-brands fa-whatsapp text-lg ml-1.5"></i>
+                    <span class="hidden md:inline">واتساب</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-12 pb-16 px-4 overflow-hidden">
+        <div
+            class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cinemaRed opacity-15 blur-[140px] rounded-full pointer-events-none">
+        </div>
+        <div
+            class="absolute top-1/3 right-10 w-72 h-72 bg-orangeOrange opacity-10 blur-[100px] rounded-full pointer-events-none">
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Discount Badge -->
+            <div
+                class="inline-flex items-center space-x-2 space-x-reverse bg-gradient-to-r from-cinemaRed via-orangeOrange to-cinemaDarkRed text-white px-6 py-2.5 rounded-full text-sm sm:text-base font-bold shadow-xl mb-8 pulse-discount border border-orange-500/30">
+                <i class="fa-solid fa-fire text-cinemaGold text-lg"></i>
+                <span>خصم الافتتاح الحصري: <span class="text-cinemaGold text-xl font-black">50%</span> على أول فيديو
+                لك!</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-black text-white leading-tight mb-6">
+                صوتك سينمائي احترافي <br>
+                <span class="bg-gradient-to-r from-cinemaRed via-orangeOrange to-cinemaGold bg-clip-text text-transparent">لكل فيديوهاتك ومقاطعك</span>
+            </h1>
+
+            <p class="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+                دبلجة وتعليق صوتي سينمائي عالي الجودة بأسعار تنافسية تبدأ من 7.5 جنيه فقط بعد الخصم!
+            </p>
+
+            <!-- Prominent Contact Banner for Orange -->
+            <div
+                class="max-w-xl mx-auto glass-panel p-4 rounded-2xl border border-orangeOrange/40 mb-10 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div
+                        class="w-12 h-12 bg-orangeOrange/20 border border-orangeOrange text-orangeOrange rounded-xl flex items-center justify-center text-xl font-black">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-orangeOrange font-bold block">خط الاتصال المباشر (أورانج)</span>
+                        <a href="tel:01228838106"
+                            class="text-2xl font-black text-white font-mono tracking-wider hover:text-orangeOrange transition-colors">01228838106</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2 space-x-reverse w-full sm:w-auto">
+                    <a href="tel:01228838106"
+                        class="flex-1 sm:flex-none bg-orangeOrange hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center justify-center shadow-md transition-all">
+                        <i class="fa-solid fa-phone ml-2"></i> اتصل الآن
+                    </a>
+                    <a href="https://wa.me/201228838106" target="_blank"
+                        class="flex-1 sm:flex-none bg-whatsappGreen hover:bg-emerald-600 text-white font-bold px-5 py-2.5 rounded-xl text-sm flex items-center justify-center shadow-md transition-all">
+                        <i class="fa-brands fa-whatsapp ml-2"></i> واتساب
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="py-12 px-4 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-white mb-2">حاسبة التكلفة التفاعلية 🧮</h2>
+                <p class="text-gray-400">حدد مدة الفيديو واعرف السعر النهائي فوراً بعد خصم الـ 50%</p>
+            </div>
+
+            <div class="glass-card p-6 sm:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <label for="videoDuration" class="text-lg font-bold text-white">مدة الفيديو:</label>
+                                <span id="durationDisplay" class="text-2xl font-black text-cinemaGold">5 دقائق</span>
+                            </div>
+                            <input type="range" id="videoDuration" min="1" max="30" value="5" class="cursor-pointer">
+                            <div class="flex justify-between text-xs text-gray-500 mt-2">
+                                <span>1 دقيقة</span>
+                                <span>15 دقيقة</span>
+                                <span>30 دقيقة</span>
+                            </div>
+                        </div>
+
+                        <!-- First Order Toggle -->
+                        <div
+                            class="bg-cinemaDark/80 p-4 rounded-xl border border-gray-800 flex items-center justify-between">
+                            <div>
+                                <span class="text-sm font-bold text-white block">هل هذا أول طلب لك؟</span>
+                                <span class="text-xs text-gray-400">للحصول على الخصم الخاص (50%)</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="firstOrderDiscount" checked onchange="updateCalculation()" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cinemaRed"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Calculated Result -->
+                    <div class="gradient-border p-1">
+                        <div class="bg-cinemaDark p-6 sm:p-8 rounded-[0.9rem] text-center space-y-4">
+                            <span id="discountBadge" class="bg-cinemaGold/20 text-cinemaGold text-xs font-extrabold px-3 py-1 rounded-full border border-cinemaGold/30 inline-block">
+                                تم تطبيق خصم 50% ✨
+                            </span>
+
+                            <div class="py-2">
+                                <span class="text-xs text-gray-400 block mb-1">السعر الأصلي: <span id="originalPrice" class="line-through text-gray-500">15 ج.م</span></span>
+                                <div class="text-5xl font-black text-cinemaGold text-glow-gold tracking-tight"
+                                    id="finalPrice">
+                                    7.5 <span class="text-xl font-bold text-white">ج.م</span>
+                                </div>
+                            </div>
+
+                            <p id="tierDescription" class="text-xs text-gray-400">
+                                فيديو قصير (حتى 7 دقائق) بسعر العرض.
+                            </p>
+
+                            <div class="space-y-2 pt-2">
+                                <button onclick="sendCalculatedOrder()" class="w-full bg-whatsappGreen hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center text-sm">
+                                    <i class="fa-brands fa-whatsapp text-lg ml-2"></i>
+                                    طلب الخصم عبر الواتساب
+                                </button>
+                                <a href="tel:01228838106"
+                                    class="w-full bg-orangeOrange hover:bg-orange-600 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center text-sm">
+                                    <i class="fa-solid fa-phone text-sm ml-2"></i>
+                                    اتصل بخط أورانج: 01228838106
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-12 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black text-white mb-2">قائمة الأسعار الرسمية 🏷️</h2>
+                <p class="text-gray-400">أسعار شفافة تناسب الجميع قبل وبعد الخصم</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Short Video Package -->
+                <div class="glass-card p-8 rounded-2xl relative border border-gray-800">
+                    <div class="mb-6">
+                        <span class="text-xs text-cinemaGold font-bold tracking-wider uppercase bg-cinemaGold/10 px-3 py-1 rounded-full">مقاطع قصيرة</span>
+                        <h3 class="text-2xl font-black text-white mt-3">فيديو قصير (حتى 7 دقائق)</h3>
+                        <p class="text-gray-400 text-sm mt-1">مناسب للشورتس والريلز والمقاطع السريعة</p>
+                    </div>
+
+                    <div class="my-6">
+                        <span class="text-xs text-gray-500 line-through block">السعر الأصلي: 15 جنيه</span>
+                        <div class="flex items-baseline space-x-2 space-x-reverse">
+                            <span class="text-5xl font-black text-cinemaGold">7.5</span>
+                            <span class="text-lg font-bold text-gray-300">جنيه مصري (بعد الخصم)</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-4">
+                        <a href="https://wa.me/201228838106?text=%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%B7%D9%84%D8%A8%20%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%81%D9%8A%D8%AF%D9%8A%D9%88%20%D8%A7%D9%84%D9%82%D8%B5%D9%8A%D8%B1%20(7.5%20%D8%AC%D9%86%D9%8A%D9%87)"
+                            target="_blank"
+                            class="w-full block text-center bg-whatsappGreen hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition-all">
+                            طلب عبر واتساب (01228838106)
+                        </a>
+                        <a href="tel:01228838106"
+                            class="w-full block text-center bg-orangeOrange hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl transition-all text-sm">
+                            اتصال مباشر (أورانج)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Long Video Package -->
+                <div class="glass-card p-8 rounded-2xl relative border-2 border-cinemaRed/60 shadow-xl">
+                    <div class="mb-6">
+                        <span class="text-xs text-cinemaRed font-bold tracking-wider uppercase bg-cinemaRed/10 px-3 py-1 rounded-full">مقاطع طويلة / أفلام</span>
+                        <h3 class="text-2xl font-black text-white mt-3">فيديو طويل (20 - 30 دقيقة)</h3>
+                        <p class="text-gray-400 text-sm mt-1">مثالي لملخصات الأفلام والمراجعات الشاملة</p>
+                    </div>
+
+                    <div class="my-6">
+                        <span class="text-xs text-gray-500 line-through block">السعر الأصلي: 60 جنيه</span>
+                        <div class="flex items-baseline space-x-2 space-x-reverse">
+                            <span class="text-5xl font-black text-cinemaGold">30</span>
+                            <span class="text-lg font-bold text-gray-300">جنيه مصري (بعد الخصم)</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-4">
+                        <a href="https://wa.me/201228838106?text=%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%B7%D9%84%D8%A8%20%D8%A8%D8%A7%D9%82%D8%A9%20%D8%A7%D9%84%D9%81%D9%8A%D8%AF%D9%8A%D9%88%20%D8%A7%D9%84%D8%B7%D9%88%D9%8A%D9%84%20(30%20%D8%AC%D9%86%D9%8A%D9%87)"
+                            target="_blank"
+                            class="w-full block text-center bg-whatsappGreen hover:bg-emerald-600 text-white font-bold py-3 rounded-xl transition-all">
+                            طلب عبر واتساب (01228838106)
+                        </a>
+                        <a href="tel:01228838106"
+                            class="w-full block text-center bg-orangeOrange hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl transition-all text-sm">
+                            اتصال مباشر (أورانج)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-cinemaDark/90 border-t border-gray-800">
+        <div class="max-w-2xl mx-auto text-center space-y-6">
+            <h2 class="text-3xl font-black text-white">تواصل معنا فوراً 📲</h2>
+            <p class="text-gray-400">فريق العمل جاهز لاستلام فيديوهاتك والبدء في الدبلجة على مدار الساعة</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                <a href="tel:01228838106"
+                    class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center space-y-3 border border-orangeOrange/50 hover:bg-orangeOrange/10 transition-all">
+                    <div
+                        class="w-14 h-14 bg-orangeOrange text-white rounded-full flex items-center justify-center text-2xl shadow-lg glow-orange">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <span class="text-xs text-orangeOrange font-bold">شبكة أورانج</span>
+                    <span class="text-2xl font-black text-white font-mono">01228838106</span>
+                    <span class="text-xs text-gray-400">اضغط للاتصال المباشر</span>
+                </a>
+
+                <a href="https://wa.me/201228838106" target="_blank"
+                    class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center space-y-3 border border-whatsappGreen/50 hover:bg-whatsappGreen/10 transition-all">
+                    <div
+                        class="w-14 h-14 bg-whatsappGreen text-white rounded-full flex items-center justify-center text-2xl shadow-lg">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <span class="text-xs text-whatsappGreen font-bold">تواصل واتساب</span>
+                    <span class="text-2xl font-black text-white font-mono">01228838106</span>
+                    <span class="text-xs text-gray-400">اضغط لفتح المحادثة</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="glass-panel border-t border-gray-800 py-6 px-4 text-center text-gray-400 text-sm">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <i class="fa-solid fa-film text-cinemaRed text-lg"></i>
+                <span class="font-bold text-white">صوتك في فيلم &copy; 2026</span>
+            </div>
+            <p class="text-xs text-gray-500">للتواصل والخدمات: 01228838106 (أورانج / واتساب)</p>
+        </div>
+    </footer>
+
+    <script>
+        const durationInput = document.getElementById('videoDuration');
+        const durationDisplay = document.getElementById('durationDisplay');
+        const finalPriceEl = document.getElementById('finalPrice');
+        const originalPriceEl = document.getElementById('originalPrice');
+        const tierDescEl = document.getElementById('tierDescription');
+        const firstOrderCheckbox = document.getElementById('firstOrderDiscount');
+        const discountBadge = document.getElementById('discountBadge');
+
+        function updateCalculation() {
+            const minutes = parseInt(durationInput.value);
+            const isFirstOrder = firstOrderCheckbox.checked;
+            durationDisplay.innerText = `${minutes} ${minutes === 1 ? 'دقيقة' : 'دقائق'}`;
+
+            let basePrice = 0;
+
+            if (minutes <= 7) {
+                basePrice = 15;
+                tierDescEl.innerText = "فيديو قصير (حتى 7 دقائق).";
+            } else if (minutes <= 30) {
+                basePrice = 60;
+                tierDescEl.innerText = "فيديو طويل (20 - 30 دقيقة).";
+            } else {
+                basePrice = Math.round((minutes / 30) * 60);
+                tierDescEl.innerText = `فيديو مخصص (${minutes} دقيقة).`;
+            }
+
+            const finalPrice = isFirstOrder ? (basePrice * 0.5) : basePrice;
+
+            if (isFirstOrder) {
+                discountBadge.style.display = 'inline-block';
+                originalPriceEl.parentElement.style.display = 'block';
+            } else {
+                discountBadge.style.display = 'none';
+                originalPriceEl.parentElement.style.display = 'none';
+            }
+
+            originalPriceEl.innerText = `${basePrice} ج.م`;
+            finalPriceEl.innerHTML = `${finalPrice} <span class="text-xl font-bold text-white">ج.م</span>`;
+        }
+
+        durationInput.addEventListener('input', updateCalculation);
+
+        function sendCalculatedOrder() {
+            const minutes = durationInput.value;
+            const price = finalPriceEl.innerText.replace('ج.م', '').trim();
+            const text = `مرحباً صوتك في فيلم، أريد حجز دبلجة فيديو مدته ${minutes} دقيقة بسعر (${price} جنيه).`;
+            window.open(`https://wa.me/201228838106?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        window.onload = function() {
+            updateCalculation();
+        };
+    </script>
+</body>
+
+</html>
